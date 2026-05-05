@@ -16,32 +16,39 @@ exports.handler = async function (event) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Pflichtfelder fehlen' }) };
   }
 
-  const prompt = `Du bist eine Expertin für Instagram-Bios für deutschsprachige Unternehmerinnen und Coaches.
+  const prompt = `Du bist eine der besten Instagram-Copywriterinnen im deutschsprachigen Raum. Du schreibst Bios die sofort Aufmerksamkeit erzeugen, Vertrauen aufbauen und zum Folgen oder Klicken animieren.
 
-Erstelle 3 verschiedene Instagram-Bio-Varianten basierend auf diesen Infos:
+Du bekommst Rohdaten von einer Unternehmerin. Deine Aufgabe: Verwandle diese Infos in 3 verkaufsstarke, magnetische Instagram-Bios. Schreib NICHT einfach die Infos ab – veredle sie mit echtem Copywriting.
 
+ROHDATEN:
 Name/Titel: ${name}
 Zielgruppe: ${zielgruppe}
 Transformation/Ergebnis: ${transformation}
-${persoenlichkeit ? `Persönlichkeit/besonderes Merkmal: ${persoenlichkeit}` : ''}
+${persoenlichkeit ? `Persönlichkeit: ${persoenlichkeit}` : ''}
 Call-to-Action: ${cta || 'keinen angegeben'}
-Ton: ${ton}
+Gewünschter Ton: ${ton}
 Emojis: ${emoji}
 
-Regeln für Instagram-Bios:
-- Maximal 150 Zeichen pro Bio (ohne Zeilenumbrüche gezählt)
-- Jede Bio soll einzigartig sein in Struktur und Fokus
-- Nutze Zeilenumbrüche sinnvoll (max. 3-4 Zeilen)
-- Die Bio soll sofort klar machen: WER sie ist, WEM sie hilft, was der nächste Schritt ist
-- Variante 1: Fokus auf Transformation / konkretes Ergebnis
-- Variante 2: Fokus auf Persönlichkeit & Authentizität
-- Variante 3: Mutig, klar, direkter Hook der sofort neugierig macht
+COPYWRITING-REGELN für magnetische Bios:
+- Sprich die Zielgruppe direkt an oder zeig ihr Problem/Wunsch auf
+- Nutze starke Verben statt schwacher Substantive ("du wirst sichtbar" statt "Sichtbarkeit")
+- Konkret statt vage ("3 Kunden in 30 Tagen" statt "mehr Kunden gewinnen")
+- Keine leeren Worthülsen wie "leidenschaftlich", "authentisch", "holistisch"
+- Die Bio soll ein Gefühl erzeugen – nicht nur informieren
+- Maximal 150 Zeichen (ohne Zeilenumbrüche)
+- 3-4 Zeilen mit sinnvollen Zeilenumbrüchen
+- Jede Zeile hat einen eigenen Job: Aufmerksamkeit → Relevanz → Vertrauen → Aktion
+
+VARIANTEN:
+- Variante 1 "Die Transformations-Bio": Fokus auf das konkrete Ergebnis/den Vorher-Nachher Effekt. Die Leserin soll denken "genau das will ich!"
+- Variante 2 "Die Persönlichkeits-Bio": Fokus auf wer sie ist, was sie einzigartig macht. Menschlich, warm, nahbar – aber trotzdem professionell
+- Variante 3 "Der Pattern Interrupt": Unerwarteter Einstieg, provokant oder überraschend, bricht das typische Bio-Muster auf. Mutig und unvergesslich.
 
 Antworte NUR mit einem JSON-Array, ohne Erklärungen, ohne Markdown-Backticks:
 [
   {"label": "Variante 1 – Transformation", "bio": "..."},
   {"label": "Variante 2 – Persönlichkeit", "bio": "..."},
-  {"label": "Variante 3 – Direkter Hook", "bio": "..."}
+  {"label": "Variante 3 – Pattern Interrupt", "bio": "..."}
 ]`;
 
   try {
@@ -53,7 +60,7 @@ Antworte NUR mit einem JSON-Array, ohne Erklärungen, ohne Markdown-Backticks:
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-opus-4-5',
+        model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
         messages: [{ role: 'user', content: prompt }]
       })
