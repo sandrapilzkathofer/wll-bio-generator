@@ -293,75 +293,8 @@
 
     .copy-btn:hover { background: var(--rose); color: #fff; }
 
-    /* Email capture */
-    .email-section {
-      background: var(--rose-light);
-      border: 0.5px solid #e8d8d4;
-      border-radius: 16px;
-      padding: 2rem 1.75rem;
-      margin-top: 1.75rem;
-      text-align: center;
-    }
-
-    .email-section h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      font-weight: 400;
-      margin-bottom: 0.45rem;
-    }
-
-    .email-section p {
-      font-size: 0.84rem;
-      color: #777;
-      margin-bottom: 1.25rem;
-      font-weight: 300;
-      line-height: 1.6;
-    }
-
-    .email-row {
-      display: flex;
-      gap: 0.5rem;
-      max-width: 420px;
-      margin: 0 auto;
-    }
-
-    .email-row input {
-      flex: 1;
-      background: #fff;
-    }
-
-    .btn-email {
-      background: var(--rose);
-      color: #fff;
-      border: none;
-      border-radius: 9px;
-      padding: 0.7rem 1.25rem;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.84rem;
-      font-weight: 400;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.2s;
-    }
-
-    .btn-email:hover { background: var(--rose-dark); }
-    .btn-email:disabled { background: #ccc; cursor: not-allowed; }
-
-    .success-msg {
-      color: #7a9e7e;
-      font-size: 0.84rem;
-      margin-top: 0.75rem;
-      display: none;
-      font-weight: 400;
-    }
-
-    .error-msg {
-      color: #e07070;
-      font-size: 0.82rem;
-      margin-top: 0.75rem;
-      display: none;
-      font-weight: 400;
-    }
+    .success-msg { display: none; }
+    .error-msg { display: none; }
 
     /* Regenerate */
     .btn-regen {
@@ -480,17 +413,7 @@
 
     <button class="btn-regen" onclick="generateBios()">↺ Neue Varianten generieren</button>
 
-    <!-- E-Mail Capture -->
-    <div class="email-section">
-      <h3>Bios per E-Mail sichern</h3>
-      <p>Trag dich ein und ich schicke dir deine Bios + einen kleinen Sichtbarkeits-Tipp direkt ins Postfach.</p>
-      <div class="email-row">
-        <input type="email" id="email-input" placeholder="deine@email.de" />
-        <button class="btn-email" id="email-btn" onclick="saveEmail()">Zusenden</button>
-      </div>
-      <div class="success-msg" id="success-msg">Wunderschön! Schau gleich in dein Postfach. 🤍</div>
-      <div class="error-msg" id="error-msg">Etwas hat nicht geklappt – bitte versuch es nochmal.</div>
-    </div>
+
   </div>
 
 </main>
@@ -597,28 +520,7 @@
     });
   }
 
-  async function saveEmail() {
-    const email = document.getElementById('email-input').value.trim();
-    if (!email || !email.includes('@')) {
-      alert('Bitte gib eine gültige E-Mail-Adresse ein.');
-      return;
-    }
 
-    document.getElementById('email-btn').disabled = true;
-
-    try {
-      await fetch('/.netlify/functions/save-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, bios: generatedBios })
-      });
-      document.getElementById('success-msg').style.display = 'block';
-      document.getElementById('email-input').disabled = true;
-    } catch (e) {
-      document.getElementById('error-msg').style.display = 'block';
-      document.getElementById('email-btn').disabled = false;
-    }
-  }
 </script>
 
 </body>
