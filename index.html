@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagram Bio Generator – work.life.love</title>
+  <meta name="description" content="Erstelle deine perfekte Instagram Bio in Sekunden – kostenlos von work.life.love Business Mentorin" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose: #c9a49a;
+      --rose-dark: #b8908a;
+      --rose-light: #f5eeec;
+      --black: #1a1a1a;
+      --gray: #888;
+      --border: #e8e0d8;
+      --bg: #fdfcfa;
+      --card-bg: #ffffff;
+      --input-bg: #faf8f5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      color: var(--black);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+      background: #fff;
+    }
+
+    .logo-script {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--rose);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-sub {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      font-size: 0.62rem;
+      color: var(--gray);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .header-divider {
+      width: 36px;
+      height: 1px;
+      background: var(--rose);
+      margin: 1.2rem auto;
+      opacity: 0.5;
+    }
+
+    .header-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-weight: 400;
+      color: var(--black);
+      line-height: 1.4;
+    }
+
+    .header-sub {
+      font-size: 0.88rem;
+      color: var(--gray);
+      margin-top: 0.5rem;
+      font-weight: 300;
+    }
+
+    /* Main layout */
+    main {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 4rem;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .step-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Form elements */
+    .field { margin-bottom: 1.1rem; }
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      color: #555;
+      font-weight: 400;
+      margin-bottom: 0.35rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--black);
+      background: var(--input-bg);
+      border: 0.5px solid #e0d8d0;
+      border-radius: 9px;
+      padding: 0.7rem 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--rose);
+      background: #fff;
+    }
+
+    textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+    .hint {
+      font-size: 0.74rem;
+      color: #aaa;
+      margin-top: 0.25rem;
+      font-weight: 300;
+    }
+
+    /* Chips */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.35rem;
+    }
+
+    .chip {
+      padding: 0.38rem 0.9rem;
+      border-radius: 100px;
+      border: 0.5px solid #e0d8d0;
+      background: var(--input-bg);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.18s;
+      user-select: none;
+    }
+
+    .chip.active {
+      background: var(--rose);
+      border-color: var(--rose);
+      color: #fff;
+    }
+
+    /* Generate button */
+    .btn-generate {
+      width: 100%;
+      background: var(--black);
+      color: #fff;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 1rem;
+      border: none;
+      border-radius: 11px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-generate:hover { background: #333; }
+    .btn-generate:active { transform: scale(0.99); }
+    .btn-generate:disabled { background: #ccc; cursor: not-allowed; }
+
+    /* Loading */
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--rose);
+      font-size: 0.88rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+    }
+
+    .loading-dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0%   { content: ''; }
+      25%  { content: '.'; }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+    }
+
+    /* Results */
+    .results { display: none; margin-top: 1.5rem; }
+
+    .results-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      text-align: center;
+      margin-bottom: 1.25rem;
+      color: var(--black);
+    }
+
+    .bio-card {
+      background: var(--card-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .bio-card:hover { border-color: var(--rose); }
+
+    .bio-variant-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-weight: 500;
+      margin-bottom: 0.65rem;
+    }
+
+    .bio-text {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--black);
+      font-weight: 300;
+      white-space: pre-wrap;
+      padding-right: 3rem;
+    }
+
+    .bio-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.75rem;
+    }
+
+    .char-count {
+      font-size: 0.72rem;
+      color: #aaa;
+    }
+
+    .char-count.over { color: #e07070; }
+
+    .copy-btn {
+      background: var(--rose-light);
+      border: none;
+      border-radius: 7px;
+      padding: 0.32rem 0.75rem;
+      font-size: 0.74rem;
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      color: var(--rose-dark);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .copy-btn:hover { background: var(--rose); color: #fff; }
+
+    /* Email capture */
+    .email-section {
+      background: var(--rose-light);
+      border: 0.5px solid #e8d8d4;
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      margin-top: 1.75rem;
+      text-align: center;
+    }
+
+    .email-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.45rem;
+    }
+
+    .email-section p {
+      font-size: 0.84rem;
+      color: #777;
+      margin-bottom: 1.25rem;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .email-row {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .email-row input {
+      flex: 1;
+      background: #fff;
+    }
+
+    .btn-email {
+      background: var(--rose);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 0.7rem 1.25rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 400;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .btn-email:hover { background: var(--rose-dark); }
+    .btn-email:disabled { background: #ccc; cursor: not-allowed; }
+
+    .success-msg {
+      color: #7a9e7e;
+      font-size: 0.84rem;
+      margin-top: 0.75rem;
+      display: none;
+      font-weight: 400;
+    }
+
+    .error-msg {
+      color: #e07070;
+      font-size: 0.82rem;
+      margin-top: 0.75rem;
+      display: none;
+      font-weight: 400;
+    }
+
+    /* Regenerate */
+    .btn-regen {
+      display: block;
+      margin: 1.25rem auto 0;
+      background: transparent;
+      border: 0.5px solid var(--border);
+      border-radius: 9px;
+      padding: 0.65rem 1.5rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .btn-regen:hover { border-color: var(--rose); color: var(--rose); }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      border-top: 0.5px solid var(--border);
+      font-size: 0.76rem;
+      color: #bbb;
+      font-weight: 300;
+    }
+
+    footer a { color: var(--rose); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .email-row { flex-direction: column; }
+      .card { padding: 1.35rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-script">work.life.love</div>
+  <div class="logo-sub">Business Mentorin</div>
+  <div class="header-divider"></div>
+  <h1 class="header-headline">Dein Instagram Bio Generator</h1>
+  <p class="header-sub">Füll die Felder aus – deine perfekte Bio ist in Sekunden bereit ✨</p>
+</header>
+
+<main>
+
+  <!-- Schritt 1: Über dich -->
+  <div class="card">
+    <div class="step-label">Über dich</div>
+
+    <div class="field">
+      <label for="name">Dein Name & was du machst</label>
+      <input type="text" id="name" placeholder="z.B. Sandra – Business Mentorin für Sichtbarkeit" />
+    </div>
+
+    <div class="field">
+      <label for="zielgruppe">Deine Zielgruppe – wem hilfst du?</label>
+      <input type="text" id="zielgruppe" placeholder="z.B. Selbstständige Frauen, Coaches, Beraterinnen" />
+    </div>
+
+    <div class="field">
+      <label for="transformation">Das größte Ergebnis / die Transformation, die du bietest</label>
+      <textarea id="transformation" placeholder="z.B. Ich helfe dir, sichtbar zu werden, dein Angebot zu positionieren und Kunden zu gewinnen – ohne dich zu verbiegen."></textarea>
+    </div>
+
+    <div class="field">
+      <label for="persoenlichkeit">Dein besonderes Merkmal oder Persönlichkeit <span style="color:#bbb">(optional)</span></label>
+      <input type="text" id="persoenlichkeit" placeholder="z.B. Mama, Unternehmerin, Weinliebhaberin 🍷" />
+    </div>
+
+    <div class="field">
+      <label for="cta">Dein Call-to-Action – was sollen sie tun?</label>
+      <input type="text" id="cta" placeholder="z.B. Kostenloser Strategie-Call ↓ oder Link zum Freebie" />
+    </div>
+  </div>
+
+  <!-- Schritt 2: Stil -->
+  <div class="card">
+    <div class="step-label">Stil & Ton</div>
+
+    <div class="field">
+      <label>Welcher Ton passt zu dir?</label>
+      <div class="chip-group" id="ton-group">
+        <span class="chip active" data-val="warm & persönlich">Warm & persönlich</span>
+        <span class="chip" data-val="professionell & klar">Professionell & klar</span>
+        <span class="chip" data-val="mutig & direkt">Mutig & direkt</span>
+        <span class="chip" data-val="inspirierend & motivierend">Inspirierend</span>
+        <span class="chip" data-val="humorvoll & leicht">Humorvoll</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Emojis in der Bio?</label>
+      <div class="chip-group" id="emoji-group">
+        <span class="chip active" data-val="ja, dezent eingesetzt">Ja, dezent</span>
+        <span class="chip" data-val="ja, gerne mehr Emojis">Ja, mehr</span>
+        <span class="chip" data-val="nein, keine Emojis">Keine Emojis</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-generate" id="gen-btn" onclick="generateBios()">✦ Bios generieren</button>
+
+  <div class="loading" id="loading">
+    <span class="loading-dots">Deine Bios werden gerade erstellt</span>
+  </div>
+
+  <!-- Ergebnisse -->
+  <div class="results" id="results">
+    <p class="results-title">Deine 3 Bio-Varianten 🤍</p>
+    <div id="bio-cards"></div>
+
+    <button class="btn-regen" onclick="generateBios()">↺ Neue Varianten generieren</button>
+
+    <!-- E-Mail Capture -->
+    <div class="email-section">
+      <h3>Bios per E-Mail sichern</h3>
+      <p>Trag dich ein und ich schicke dir deine Bios + einen kleinen Sichtbarkeits-Tipp direkt ins Postfach.</p>
+      <div class="email-row">
+        <input type="email" id="email-input" placeholder="deine@email.de" />
+        <button class="btn-email" id="email-btn" onclick="saveEmail()">Zusenden</button>
+      </div>
+      <div class="success-msg" id="success-msg">Wunderschön! Schau gleich in dein Postfach. 🤍</div>
+      <div class="error-msg" id="error-msg">Etwas hat nicht geklappt – bitte versuch es nochmal.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Mit 🤍 erstellt von <a href="https://worklifelove.at" target="_blank">work.life.love</a> · Sandra</p>
+</footer>
+
+<script>
+  let selectedTon = 'warm & persönlich';
+  let selectedEmoji = 'ja, dezent eingesetzt';
+  let generatedBios = [];
+
+  // Chip selection
+  document.querySelectorAll('#ton-group .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#ton-group .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      selectedTon = chip.dataset.val;
+    });
+  });
+
+  document.querySelectorAll('#emoji-group .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#emoji-group .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      selectedEmoji = chip.dataset.val;
+    });
+  });
+
+  async function generateBios() {
+    const name = document.getElementById('name').value.trim();
+    const zielgruppe = document.getElementById('zielgruppe').value.trim();
+    const transformation = document.getElementById('transformation').value.trim();
+    const persoenlichkeit = document.getElementById('persoenlichkeit').value.trim();
+    const cta = document.getElementById('cta').value.trim();
+
+    if (!name || !zielgruppe || !transformation) {
+      alert('Bitte füll mindestens Name, Zielgruppe und Transformation aus 🤍');
+      return;
+    }
+
+    document.getElementById('gen-btn').disabled = true;
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
+
+    try {
+      const response = await fetch('/.netlify/functions/generate-bio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, zielgruppe, transformation, persoenlichkeit, cta, ton: selectedTon, emoji: selectedEmoji })
+      });
+
+      if (!response.ok) throw new Error('API Fehler');
+
+      const data = await response.json();
+      generatedBios = data.bios;
+      renderBios(generatedBios);
+
+    } catch (e) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('gen-btn').disabled = false;
+      alert('Etwas hat nicht geklappt. Bitte versuche es nochmal.');
+    }
+  }
+
+  function renderBios(bios) {
+    const container = document.getElementById('bio-cards');
+    container.innerHTML = '';
+
+    bios.forEach((b, i) => {
+      const charCount = b.bio.replace(/\n/g, '').length;
+      const over = charCount > 150;
+      const card = document.createElement('div');
+      card.className = 'bio-card';
+      card.innerHTML = `
+        <div class="bio-variant-label">${b.label}</div>
+        <div class="bio-text" id="bio-${i}">${escapeHtml(b.bio)}</div>
+        <div class="bio-footer">
+          <span class="char-count ${over ? 'over' : ''}">${charCount} / 150 Zeichen${over ? ' – etwas zu lang' : ''}</span>
+          <button class="copy-btn" onclick="copyBio(${i})">Kopieren</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('gen-btn').disabled = false;
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function copyBio(i) {
+    const text = document.getElementById(`bio-${i}`).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const btns = document.querySelectorAll('.copy-btn');
+      const original = btns[i].textContent;
+      btns[i].textContent = 'Kopiert ✓';
+      setTimeout(() => btns[i].textContent = original, 2000);
+    });
+  }
+
+  async function saveEmail() {
+    const email = document.getElementById('email-input').value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Bitte gib eine gültige E-Mail-Adresse ein.');
+      return;
+    }
+
+    document.getElementById('email-btn').disabled = true;
+
+    try {
+      await fetch('/.netlify/functions/save-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, bios: generatedBios })
+      });
+      document.getElementById('success-msg').style.display = 'block';
+      document.getElementById('email-input').disabled = true;
+    } catch (e) {
+      document.getElementById('error-msg').style.display = 'block';
+      document.getElementById('email-btn').disabled = false;
+    }
+  }
+</script>
+
+</body>
+</html>
