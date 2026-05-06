@@ -400,6 +400,13 @@
     </div>
   </div>
 
+  <div style="max-width:660px;margin:0 auto 1rem;padding:0 0.25rem;">
+    <label style="display:flex;align-items:flex-start;gap:0.6rem;cursor:pointer;font-size:0.82rem;color:#555;font-weight:300;">
+      <input type="checkbox" id="datenschutz" style="margin-top:3px;accent-color:#c9a49a;width:16px;height:16px;flex-shrink:0;" />
+      <span>Ich habe die <a href="https://www.worklifelove.rocks/datenschutzerklaerung/" target="_blank" style="color:#c9a49a;text-decoration:underline;">Datenschutzerklärung</a> gelesen und akzeptiere sie.</span>
+    </label>
+  </div>
+
   <button class="btn-generate" id="gen-btn" onclick="generateBios()">✦ Bios generieren</button>
 
   <div class="loading" id="loading">
@@ -419,7 +426,7 @@
 </main>
 
 <footer>
-  <p>Mit 🤍 erstellt von <a href="https://worklifelove.at" target="_blank">work.life.love</a> · Sandra</p>
+  <p>Mit 🤍 erstellt von <a href="https://www.worklifelove.rocks" target="_blank">work.life.love</a> · Sandra</p>
 </footer>
 
 <script>
@@ -453,6 +460,11 @@
 
     if (!name || !zielgruppe || !transformation) {
       alert('Bitte füll mindestens Name, Zielgruppe und Transformation aus 🤍');
+      return;
+    }
+
+    if (!document.getElementById('datenschutz').checked) {
+      alert('Bitte akzeptiere die Datenschutzerklärung um fortzufahren.');
       return;
     }
 
